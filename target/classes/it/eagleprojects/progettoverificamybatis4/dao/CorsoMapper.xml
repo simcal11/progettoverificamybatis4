@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="it.eagleprojects.progettoverificamybatis4.dao.CorsoMapper">
+
+	<resultMap type="corso" id="corsoResult">
+		<id property="id" column="id" />
+		<result property="nome" column="nome" />
+		<result property="cfu" column="cfu" />
+		<result property="ore" column="ore" />
+	</resultMap>
+	
+	
+
+	<select id="getAllCorsi" resultType="corso"
+		resultMap="corsoResult">
+		SELECT *
+		FROM corsi 
+	</select>
+
+	<insert id="insertCorso" parameterType="corso"
+		keyProperty="id" useGeneratedKeys="true">
+		INSERT INTO corsi (nome, cfu, ore)
+		VALUES (#{nome}, #{cfu}, #{ore})
+	</insert>
+
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="it.eagleprojects.progettoverificamybatis4.dao.StudenteMapper">
+
+	<resultMap type="studente" id="studenteResult">
+		<id property="id" column="id" />
+		<result property="nome" column="nome" />
+		<result property="cognome" column="cognome" />
+		<result property="email" column="email" />
+		<result property="matricola" column="matricola" />
+	</resultMap>
+	
+	
+
+	<select id="getAllStudenti" resultType="studente"
+		resultMap="studenteResult">
+		SELECT *
+		FROM studenti 
+	</select>
+
+	<insert id="insertStudente" parameterType="studente"
+		keyProperty="id" useGeneratedKeys="true">
+		INSERT INTO studenti (nome, cognome, email, matricola)
+		VALUES (#{nome}, #{cognome}, #{email}, #{matricola})
+	</insert>
+
+</mapper>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+	
+	<configuration>
+		<typeAliases>
+		
+			<typeAlias type="it.eagleprojects.progettoverificamybatis4.model.Studente" alias="studente"/>
+			<typeAlias type="it.eagleprojects.progettoverificamybatis4.model.Corso" alias="corso"/>
+		
+		</typeAliases>
+		
+		<environments default="development">
+		
+			<environment id="development">
+				
+				<!-- Con transazione si intende un insieme di operazioni che vengono effettivamente eseguite
+				(ovvero si esegue il commin) solo se tutte quante non hanno restituito errore. In caso di errore
+				di una qualsiasi sotto operazione, l'intera transazione viene annullata e il sistema viene
+				nello stato in cui era esattamente prima di iniziare la transazione -->
+				<transactionManager type="JDBC"></transactionManager>
+				
+				<!-- Quando ci si collega asd un database, c'è un momento in cui c'è un oneroso quantitativo di tempo
+				che serve all'app e al database quando si connetto. Quindi quando una app si collega molte volte ad un database,
+				in teoria ogni volta si chiude la connessione e bisogna ricominciare. In un regime di connessioni pooled 
+				invece la connesione non viene chiusa ma rimare aperta e questo evita ogni volta di rifare tutto da capo.
+				Quindi anche se l'app chiude la connessione, il database lascia aperta la connessione nel caso in cui l'app
+				si ripresenti per eseguire una nuova connessione, evitando tutti i controlli di sicurezzza etc  -->
+				<dataSource type="POOLED">
+				
+					<property name="driver" value="org.postgresql.Driver"/>
+					<property name="url" value="jdbc:postgresql://127.0.0.1:5432/postgres"/>
+					<property name="username" value="postgres"/>
+					<property name="password" value="postgres"/>
+				
+				</dataSource>
+				
+			</environment>	
+		
+		</environments>
+		
+		
+		<mappers>
+			<mapper resource="it/eagleprojects/progettoverificamybatis4/dao/StudenteMapper.xml"/>
+			<mapper resource="it/eagleprojects/progettoverificamybatis4/dao/CorsoMapper.xml"/>
+		</mappers>
+		
+		
+		
+		
+		
+	</configuration>
