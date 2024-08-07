@@ -10,20 +10,85 @@
 		<result property="nome" column="nome" />
 		<result property="cfu" column="cfu" />
 		<result property="ore" column="ore" />
+		<collection property="studenti" ofType="studente" resultMap="studenteResult"/>
+	</resultMap>
+	
+	
+	<resultMap type="studente" id="studenteResult">
+		<id property="id" column="s_id" />
+		<result property="nome" column="s_nome" />
+		<result property="cognome" column="s_cognome" />
+		<result property="email" column="s_email" />
+		<result property="email" column="s_email" />
+		<result property="matricola" column="s_matricola" />
+	</resultMap>
+	
+	 
+	<resultMap type="csi" id="csiResult">
+		<result property="corsoId" column="corsoid" />
+		<result property="studenteId" column="studenteid" />
 	</resultMap>
 	
 	
 
 	<select id="getAllCorsi" resultType="corso"
 		resultMap="corsoResult">
-		SELECT *
-		FROM corsi 
+		SELECT c.id, c.nome, c.cfu, c.ore, s.id as s_id, s.nome as s_nome, s.cognome as s_cognome, s.email as s_email, s.matricola as s_matricola
+		FROM corsi c LEFT OUTER JOIN corsi_studenti_iscrizioni csi on c.id  = csi.corsoid JOIN studenti s on s.id  = csi.studenteid
 	</select>
+	
+	<select id="getCorsoById" resultType="corso"
+		resultMap="corsoResult">
+		SELECT c.id, c.nome, c.cfu, c.ore, s.id as s_id, s.nome as s_nome, s.cognome as s_cognome, s.email as s_email, s.matricola as s_matricola
+		FROM corsi c LEFT OUTER JOIN corsi_studenti_iscrizioni csi on c.id  = csi.corsoid JOIN studenti s on s.id  = csi.studenteid
+		WHERE c.id = #{corsoId}
+	</select>
+	
+	<select id="getAllCorsiByStudenteId" resultType="corso"
+		resultMap="corsoResult">
+		SELECT c.id, c.nome, c.cfu, c.ore
+		FROM corsi c JOIN corsi_studenti_iscrizioni csi on c.id  = csi.studenteid JOIN studenti s on s.id  = csi.corsoid 
+		WHERE s.id = #{studenteId}
+	</select>
+	
 
 	<insert id="insertCorso" parameterType="corso"
 		keyProperty="id" useGeneratedKeys="true">
 		INSERT INTO corsi (nome, cfu, ore)
 		VALUES (#{nome}, #{cfu}, #{ore})
 	</insert>
+	
+	
+	
+	
+	
+	<insert id="insertCorsoToStudente" parameterType="csi">
+		INSERT INTO corsi_studenti_iscrizioni(corsoid, studenteid)
+		VALUES (#{corsoId}, #{studenteId})
+	</insert>
+	
+	
+	<update id="updateCorsoById" parameterType="corso">
+		UPDATE corsi
+		SET nome=#{nome}, cfu=#{cfu}, ore=#{ore}
+		WHERE id=#{id}
+	</update>
+	
+	<delete id="deleteCorsoById" parameterType="corso">
+		DELETE FROM corsi
+		WHERE id=#{id}
+	</delete>
+	
+	<delete id="deleteAllCorsi" parameterType="corso">
+		DELETE FROM corsi
+	</delete>
+	
+	<delete id="deleteCorsoFromStudente" parameterType="corso">
+		DELETE FROM corsi_studenti_iscrizioni
+		WHERE corsoid = #{corsoId} AND studenteid = #{studenteId}
+	</delete>
+	
+	
+	
 
 </mapper>

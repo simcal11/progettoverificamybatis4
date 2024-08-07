@@ -2,10 +2,12 @@ package it.eagleprojects.progettoverificamybatis4.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import it.eagleprojects.progettoverificamybatis4.dao.utils.MyBatisUtil;
+import it.eagleprojects.progettoverificamybatis4.model.CorsiStudentiIscrizioni;
 import it.eagleprojects.progettoverificamybatis4.model.Studente;
 
 
@@ -19,19 +21,107 @@ public class StudenteMapper {
 	public List<Studente> getAllStudenti(){
 		
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-		List<Studente> studentiList = session.selectList("getAllStudenti"); //Qui il nome è quello definito nel file mapper xml
+		List<Studente> listaStudenti = session.selectList("getAllStudenti"); //Qui il nome è quello definito nel file mapper xml
+		session.commit();
+		session.close();
+		return listaStudenti;
+	}
+	
+	
+	/**
+	 * Metodo che ritorna una riga corrispondente allo studenteId specificato come parametro
+	 * @return una istanza di Studente
+	 */
+	public Studente getStudenteById(@Param("studenteId") Long studenteId) {
+		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
+		Studente studente = session.selectOne("getStudenteById", studenteId); //Qui il nome è quello definito nel file mapper xml
+		session.commit();
+		session.close();
+		return studente;
+	}
+	
+	/**
+	 * Metodo che ritorna tutti gli Studenti iscritti al corsoId specificato come parametro
+	 * @return una <code> List </code> di Studente
+	 */
+	public List<Studente> getAllStudentiByCorsoId(@Param("corsoId") Long corsoId){
+		
+		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
+		List<Studente> studentiList = session.selectList("getAllStudentiByCorsoId", corsoId); //Qui il nome è quello definito nel file mapper xml
 		session.commit();
 		session.close();
 		return studentiList;
 	}
 	
+	
 	/**
 	 *  Metodo che salva una istanza di <code> Studente </code> nel database sottostante 
 	 * @param e l'istanza da persistere
 	 */
-	public void saveStudente(Studente studente) {
+	public Studente saveStudente(Studente studente) {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
 		session.insert("insertStudente", studente);
+		session.commit();
+		session.close();
+		return studente;
+	}
+	
+	/**
+	 *  Metodo che aggiunge una istanza di <code> Studente </code> al Corso specificato
+	 * @param e l'istanza da aggiungere
+	 */
+	public void addStudenteToCorso(Long corsoId, Studente studente) {
+		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
+		CorsiStudentiIscrizioni csi = new CorsiStudentiIscrizioni(corsoId, studente.getId());
+		session.insert("insertStudenteToCorso", csi);
+		session.commit();
+		session.close();
+	}
+	
+	
+	
+	/**
+	 * Metodo che aggiorna una istanza di <code> Studente </code> nel database sottostante 
+	 * @return una istanza di Studente (quella appena aggiornata)
+	 */
+	public Studente updateStudenteById(@Param("studente") Studente studente) {
+		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
+		int righeModificate = (int) session.update("updateStudenteById", studente); //Qui il nome è quello definito nel file mapper xml
+		session.commit();
+		session.close();
+		return studente;
+	}
+	
+	/**
+	 * Metodo che elimina una istanza di <code> Studente </code> nel database sottostante 
+	 * @return void
+	 */
+	public void deleteStudenteById(@Param("studenteId") Long studenteId) {
+		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
+		int righeModificate = (int) session.delete("deleteStudenteById", studenteId); //Qui il nome è quello definito nel file mapper xml
+		session.commit();
+		session.close();
+	}
+	
+	/**
+	 * Metodo che elimina tutte le istanze <code> Studente </code> nel database sottostante 
+	 * @return void
+	 */
+	public void deleteAllStudenti() {
+		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
+		int righeModificate = (int) session.delete("deleteAllStudenti"); //Qui il nome è quello definito nel file mapper xml
+		session.commit();
+		session.close();
+	}
+	
+	/**
+	 *  Metodo che elimina una istanza di <code> Studente </code> dal Corso specificato
+	 * @param e l'istanza da aggiungere
+	 */
+	public void deleteStudenteFromCorso(Long corsoId, Studente studente) {
+		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
+		CorsiStudentiIscrizioni csi = new CorsiStudentiIscrizioni(corsoId, studente.getId());
+		session.delete("deleteStudenteFromCorso", csi);
 		session.commit();
 		session.close();
 	}
