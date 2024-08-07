@@ -3,7 +3,8 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="it.eagleprojects.progettoverificamybatis4.dao.StudenteMapper">
+<mapper
+	namespace="it.eagleprojects.progettoverificamybatis4.dao.StudenteMapper">
 
 	<resultMap type="studente" id="studenteResult">
 		<id property="id" column="id" />
@@ -11,76 +12,94 @@
 		<result property="cognome" column="cognome" />
 		<result property="email" column="email" />
 		<result property="matricola" column="matricola" />
-		<collection property="corsi" ofType="corso" resultMap="corsoResult"/>
+		<collection property="corsi" ofType="corso"
+			resultMap="corsoResult" />
 	</resultMap>
-	
+
 	<resultMap type="corso" id="corsoResult">
 		<id property="id" column="corso_id" />
 		<result property="nome" column="corso_nome" />
 		<result property="cfu" column="corso_cfu" />
 		<result property="ore" column="corso_ore" />
 	</resultMap>
-	
-	 
+
+
 	<resultMap type="csi" id="csiResult">
 		<result property="corsoId" column="corsoid" />
 		<result property="studenteId" column="studenteid" />
 	</resultMap>
-	
-	
+
+
 
 	<select id="getAllStudenti" resultType="studente"
 		resultMap="studenteResult">
-		SELECT s.id, s.nome, s.cognome, s.email, s.matricola, c.id as corso_id, c.nome as corso_nome, c.cfu as corso_cfu, c.ore as corso_ore
-		FROM studenti s LEFT OUTER JOIN corsi_studenti_iscrizioni csi on s.id  = csi.studenteid JOIN corsi c on c.id  = csi.corsoid
+		SELECT s.id, s.nome, s.cognome, s.email, s.matricola, c.id
+		as corso_id, c.nome as corso_nome, c.cfu as corso_cfu, c.ore as
+		corso_ore
+		FROM studenti s LEFT OUTER JOIN corsi_studenti_iscrizioni csi
+		on s.id = csi.studenteid JOIN corsi c on c.id = csi.corsoid
 	</select>
-	
+
 	<select id="getStudenteById" resultType="studente"
 		resultMap="studenteResult">
-		SELECT s.id, s.nome, s.cognome, s.email, s.matricola, c.id as corso_id, c.nome as corso_nome, c.cfu as corso_cfu, c.ore as corso_ore
-		FROM studenti s LEFT OUTER JOIN corsi_studenti_iscrizioni csi on s.id  = csi.studenteid JOIN corsi c on c.id  = csi.corsoid
-		WHERE s.id = #{studenteId}
+		SELECT s.id, s.nome, s.cognome, s.email, s.matricola, c.id
+		as corso_id, c.nome as corso_nome, c.cfu as corso_cfu, c.ore as
+		corso_ore
+		FROM studenti s LEFT OUTER JOIN corsi_studenti_iscrizioni csi
+		on s.id = csi.studenteid JOIN corsi c on c.id = csi.corsoid
+		WHERE s.id
+		= #{studenteId}
 	</select>
-	
+
 	<select id="getAllStudentiByCorsoId" resultType="studente"
 		resultMap="studenteResult">
 		SELECT s.id, s.nome, s.cognome, s.email, s.matricola
-		FROM studenti s JOIN corsi_studenti_iscrizioni csi on s.id  = csi.studenteid JOIN corsi c on c.id  = csi.corsoid 
+		FROM
+		studenti s JOIN corsi_studenti_iscrizioni csi on s.id = csi.studenteid
+		JOIN corsi c on c.id = csi.corsoid
 		WHERE c.id = #{corsoId}
 	</select>
-	
+
 	<insert id="insertStudente" parameterType="studente"
 		keyProperty="id" useGeneratedKeys="true">
-		INSERT INTO studenti (nome, cognome, email, matricola)
+		INSERT INTO studenti (nome, cognome,
+		email, matricola)
 		VALUES (#{nome}, #{cognome}, #{email}, #{matricola})
 	</insert>
-	
+
 	<insert id="insertStudenteToCorso" parameterType="csi">
-		INSERT INTO corsi_studenti_iscrizioni(corsoid, studenteid)
-		VALUES (#{corsoId}, #{studenteId})
+		INSERT INTO
+		corsi_studenti_iscrizioni(corsoid, studenteid)
+		VALUES (#{corsoId},
+		#{studenteId})
 	</insert>
-	
-	
+
+
 	<update id="updateStudenteById" parameterType="studente">
 		UPDATE studenti
-		SET nome=#{nome}, cognome=#{cognome}, email=#{email}, matricola=#{matricola}
+		SET nome=#{nome}, cognome=#{cognome}, email=#{email},
+		matricola=#{matricola}
 		WHERE id=#{id}
 	</update>
-	
+
 	<delete id="deleteStudenteById" parameterType="studente">
-		DELETE FROM studenti
+		DELETE FROM
+		studenti
 		WHERE id=#{id}
 	</delete>
-	
+
 	<delete id="deleteAllStudenti" parameterType="studente">
-		DELETE FROM studenti
+		DELETE FROM
+		studenti
 	</delete>
-	
+
 	<delete id="deleteStudenteFromCorso" parameterType="studente">
-		DELETE FROM corsi_studenti_iscrizioni
-		WHERE corsoid = #{corsoId} AND studenteid = #{studenteId}
+		DELETE FROM
+		corsi_studenti_iscrizioni
+		WHERE corsoid = #{corsoId} AND studenteid =
+		#{studenteId}
 	</delete>
-	
-	
+
+
 
 </mapper>
