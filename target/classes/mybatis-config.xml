@@ -10,7 +10,7 @@
 			<typeAlias type="it.eagleprojects.progettoverificamybatis4.model.Corso" alias="corso"/>
 			<typeAlias type="it.eagleprojects.progettoverificamybatis4.model.CorsiStudentiIscrizioni" alias="csi"/>
 		
-		</typeAliases>
+		</typeAliases>  
 		
 		<environments default="development">
 		

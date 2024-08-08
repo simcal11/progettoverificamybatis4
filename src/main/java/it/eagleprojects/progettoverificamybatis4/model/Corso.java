@@ -11,7 +11,7 @@ public class Corso {
 
 	private List<Studente> studenti;
 
-	public Long getId() {
+	public Long getId() {  
 		return id;
 	}
 
@@ -58,17 +58,17 @@ public class Corso {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if ((obj == null) || (getClass() != obj.getClass())) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		}
 		Corso other = (Corso) obj;
 		return Objects.equals(cfu, other.cfu) && Objects.equals(id, other.id) && Objects.equals(nome, other.nome)
 				&& Objects.equals(ore, other.ore) && Objects.equals(studenti, other.studenti);
 	}
 
-	
+
 
 }

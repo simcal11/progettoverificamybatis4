@@ -10,7 +10,7 @@ public class Studente {
 	private String cognome;
 	private String email;
 	private String matricola;
-	private List<Corso> corsi = new ArrayList<Corso>();
+	private List<Corso> corsi = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -67,12 +67,12 @@ public class Studente {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if ((obj == null) || (getClass() != obj.getClass())) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		}
 		Studente other = (Studente) obj;
 		return Objects.equals(cognome, other.cognome) && Objects.equals(corsi, other.corsi)
 				&& Objects.equals(email, other.email) && Objects.equals(id, other.id) && matricola == other.matricola
