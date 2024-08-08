@@ -142,14 +142,14 @@ public class CorsoController {
 		corsoMapper.deleteCorsoFromStudente(studenteId, corso);
 	}
 	
-	@RequestMapping(value = "/studenti/{studenteId}/corsi", method = RequestMethod.DELETE, produces = "application/json")
-	public @ResponseBody void deleteAllCorsiByStudenteId(@PathVariable("studenteId") long studenteId)
-			throws Exception {
-		if (studenteMapper.getStudenteById(studenteId) == null) {
-			throw new Exception("Non esiste uno Studente con id = " + studenteId);
-		} else {
-			corsoMapper.deleteAllCorsiByStudenteId(studenteId);
-		}
-	}
+//	@RequestMapping(value = "/studenti/{studenteId}/corsi", method = RequestMethod.DELETE, produces = "application/json")
+//	public @ResponseBody void deleteAllCorsiByStudenteId(@PathVariable("studenteId") long studenteId)
+//			throws Exception {
+//		if (studenteMapper.getStudenteById(studenteId) == null) {
+//			throw new Exception("Non esiste uno Studente con id = " + studenteId);
+//		} else {
+//			corsoMapper.deleteAllCorsiByStudenteId(studenteId);
+//		}
+//	}
 
 }

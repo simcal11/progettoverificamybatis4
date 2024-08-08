@@ -138,13 +138,4 @@ public class CorsoMapper {
 		session.close();
 	}
 
-
-	/**
-	 *  Metodo che elimina tutte le istanze di <code> Corso </code> dallo Studente specificato
-	 * @param studenteId è l'id dello studente di cui si rimuovono tutti i corsi
-	 */
-	public void deleteAllCorsiByStudenteId(long studenteId) {
-		// TODO Auto-generated method stub
-		
-	}
 }
