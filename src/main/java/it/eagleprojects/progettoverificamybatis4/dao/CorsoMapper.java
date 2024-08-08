@@ -31,6 +31,7 @@ public class CorsoMapper {
 
 	/**
 	 * Metodo che ritorna una riga corrispondente al corsoId specificato come parametro
+	 * @param corsoId è l'id del corso che si vuole ottenere
 	 * @return una istanza di Corso
 	 */
 	public Corso getCorsoById(@Param("corsoId") long corsoId) {
@@ -45,6 +46,7 @@ public class CorsoMapper {
 
 	/**
 	 * Metodo che ritorna tutti i corsi associati allo studenteId specificato come parametro
+	 * @param studenteId è l'id dello studente
 	 * @return una <code> List </code> di Corso
 	 */
 	public List<Corso> getAllCorsiByStudenteId(@Param("studenteId") long studenteId){
@@ -60,7 +62,7 @@ public class CorsoMapper {
 
 	/**
 	 *  Metodo che salva una istanza di <code> Corso </code> nel database sottostante
-	 * @param e l'istanza da persistere
+	 * @param corso è l'istanza da persistere
 	 */
 	public Corso saveCorso(Corso corso) {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
@@ -71,8 +73,10 @@ public class CorsoMapper {
 	}
 
 	/**
-	 *  Metodo che aggiunge una istanza di <code> Corso </code> allo Studente specificato
-	 * @param e l'istanza da aggiungere
+	 * Metodo che aggiunge una istanza di <code> Corso </code> allo Studente specificato
+	 * @param studenteId l'id dello studente
+	 * @param corso è l'istanza da aggiungere
+	 * 
 	 */
 	public void addCorsoToStudente(Long studenteId, Corso corso) {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
@@ -87,6 +91,7 @@ public class CorsoMapper {
 	/**
 	 * Metodo che aggiorna una istanza di <code> Corso </code> nel database sottostante
 	 * @return una istanza di Corso (quella appena aggiornata)
+	 * @param corso è l'istanza da aggiornare
 	 */
 	public Corso updateCorsoById(@Param("corso") Corso corso) {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
@@ -98,6 +103,7 @@ public class CorsoMapper {
 
 	/**
 	 * Metodo che elimina una istanza di <code> Corso </code> nel database sottostante
+	 * @param corsoId è l'id del corso da eliminare
 	 * @return void
 	 */
 	public void deleteCorsoById(@Param("corsoId") Long corsoId) {
@@ -120,7 +126,9 @@ public class CorsoMapper {
 
 	/**
 	 *  Metodo che elimina una istanza di <code> Corso </code> dallo Studente specificato
-	 * @param e l'istanza da aggiungere
+	 * @param studenteId è l'id dello studente
+	 * @param corso è l'istanza da disassociare
+	 * @return void
 	 */
 	public void deleteCorsoFromStudente(Long studenteId, Corso corso) {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
@@ -128,5 +136,15 @@ public class CorsoMapper {
 		session.delete("deleteCorsoFromStudente", csi);
 		session.commit();
 		session.close();
+	}
+
+
+	/**
+	 *  Metodo che elimina tutte le istanze di <code> Corso </code> dallo Studente specificato
+	 * @param studenteId è l'id dello studente di cui si rimuovono tutti i corsi
+	 */
+	public void deleteAllCorsiByStudenteId(long studenteId) {
+		// TODO Auto-generated method stub
+		
 	}
 }
