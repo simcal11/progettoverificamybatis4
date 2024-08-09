@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+
+  # app:
+  #   container_name: progettoverificamybatis4
+  #   build: .
+  #   image: progettoverificamybatis4
+  #   ports:
+  #     - 8080:8080
+  #   networks:
+  #     default:
+  #       ipv4_address: 172.50.0.5
+    #network_mode: bridge
+
+  db:
+    container_name: postgres
+    image: postgres
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    ports:
+      - "5432:5432"
+    networks:
+      default:
+        ipv4_address: 172.50.0.6
+    #network_mode: bridge
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+networks:
+  default:
+    name: network1
+    ipam: 
+      config:
+        - subnet: 172.50.0.0/24
+
+volumes:
+  pgdata:

@@ -1,0 +1,13 @@
+//Lancia il server per postgres
+docker run --name postgres -d -p 5432:5432 --net network1 --ip 172.50.0.6 -v docker_pgdata:/var/lib/postgresql/data -e POSTGRES_PASSWORD=postgres postgres
+docker run --name postgres -d -p 5432:5432 -v docker_pgdata:/var/lib/postgresql/data -e POSTGRES_PASSWORD=postgres postgres
+docker run --name postgres -d -p 5432:5432 -v docker_pgdata:/var/lib/postgresql/data -e POSTGRES_PASSWORD=postgres postgres
+
+docker inspect \
+  -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' postgres
+  
+docker stop $(docker ps -a -q)
+
+docker rm $(docker ps -a -q)
+
+docker inspect -f '{{ .Mounts }}' containerid
