@@ -104,7 +104,7 @@ public class StudenteMapper {
 	 */
 	public void deleteStudenteById(@Param("studenteId") Long studenteId) {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-		int righeModificate = session.delete("deleteStudenteById", studenteId); //Qui il nome è quello definito nel file mapper xml
+		Integer righeModificate = session.delete("deleteStudenteById", studenteId); //Qui il nome è quello definito nel file mapper xml
 		session.commit();
 		session.close();
 	}
@@ -115,7 +115,7 @@ public class StudenteMapper {
 	 */
 	public void deleteAllStudenti() {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-		int righeModificate = session.delete("deleteAllStudenti"); //Qui il nome è quello definito nel file mapper xml
+		Integer righeModificate = session.delete("deleteAllStudenti"); //Qui il nome è quello definito nel file mapper xml
 		session.commit();
 		session.close();
 	}

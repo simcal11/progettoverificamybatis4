@@ -58,7 +58,6 @@ public class StudenteController {
 
 	@RequestMapping(value = "/studenti", method = RequestMethod.POST, consumes = "application/json")
 	public @ResponseBody Studente saveStudente(@RequestBody Studente studente) {
-
 		return studenteMapper.saveStudente(studente);
 	}
 

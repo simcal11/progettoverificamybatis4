@@ -95,7 +95,7 @@ public class CorsoMapper {
 	 */
 	public Corso updateCorsoById(@Param("corso") Corso corso) {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-		int righeModificate = session.update("updateCorsoById", corso); //Qui il nome è quello definito nel file mapper xml
+		Integer righeModificate = session.update("updateCorsoById", corso); //Qui il nome è quello definito nel file mapper xml
 		session.commit();
 		session.close();
 		return corso;
@@ -119,7 +119,7 @@ public class CorsoMapper {
 	 */
 	public void deleteAllCorsi() {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-		int righeModificate = session.delete("deleteAllCorsi"); //Qui il nome è quello definito nel file mapper xml
+		Integer righeModificate = session.delete("deleteAllCorsi"); //Qui il nome è quello definito nel file mapper xml
 		session.commit();
 		session.close();
 	}
