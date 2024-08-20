@@ -30,7 +30,7 @@ public class StudenteMapper {
 
 	/**
 	 * Metodo che ritorna una riga corrispondente allo studenteId specificato come parametro
-	 * @param corsoId è l'id dello studente che si vuole ottenere
+	 * @param studenteId è l'id dello studente che si vuole ottenere
 	 * @return una istanza di Studente
 	 */
 	public Studente getStudenteById(@Param("studenteId") Long studenteId) {

@@ -10,6 +10,23 @@ public class Corso {
 	private Integer ore;
 
 	private List<Studente> studenti;
+	
+	public Corso() {
+		
+	}
+	
+	
+
+	public Corso(Long id, String nome, Integer cfu, Integer ore, List<Studente> studenti) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.cfu = cfu;
+		this.ore = ore;
+		this.studenti = studenti;
+	}
+
+
 
 	public Long getId() {  
 		return id;

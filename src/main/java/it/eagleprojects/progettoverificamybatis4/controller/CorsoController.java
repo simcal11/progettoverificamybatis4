@@ -31,7 +31,7 @@ public class CorsoController {
 		return corsoMapper.getAllCorsi();
 	}
 
-	@RequestMapping(value = "/corsi/{corsoId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/corsi/{corsoId}", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody Corso getCorsoId(@PathVariable("corsoId") long corsoId) throws Exception {
 		Corso corso = corsoMapper.getCorsoById(corsoId);
 
@@ -81,7 +81,7 @@ public class CorsoController {
 	/* _____________________________________________________________________ */
 
 	@RequestMapping(value = "/corsi/{corsoId}", method = RequestMethod.PUT, produces = "application/json")
-	public @ResponseBody Corso updateCorsoById(@PathVariable("corsoId") long corsoId, @RequestBody Corso corsoRequest)
+	public @ResponseBody Corso updateCorsoById(@PathVariable("corsoId") Long corsoId, @RequestBody Corso corsoRequest)
 			throws Exception {
 
 		Corso corsoDaAggiornare = corsoMapper.getCorsoById(corsoId);
@@ -115,7 +115,7 @@ public class CorsoController {
 	}
 
 	@RequestMapping(value = "/corsi/{corsoId}", method = RequestMethod.DELETE)
-	public @ResponseBody void deleteCorso(@PathVariable("corsoId") Long corsoId) throws Exception {
+	public @ResponseBody void deleteCorsoById(@PathVariable("corsoId") Long corsoId) throws Exception {
 		if (corsoMapper.getCorsoById(corsoId) == null) {
 			throw new Exception("Non esiste un Corso con id = " + corsoId);
 		}

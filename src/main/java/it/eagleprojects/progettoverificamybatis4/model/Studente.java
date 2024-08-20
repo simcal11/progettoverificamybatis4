@@ -12,6 +12,20 @@ public class Studente {
 	private String matricola;
 	private List<Corso> corsi = new ArrayList<>();
 
+	public Studente() {
+
+	}
+
+	public Studente(Long id, String nome, String cognome, String email, String matricola, List<Corso> corsi) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.email = email;
+		this.matricola = matricola;
+		this.corsi = corsi;
+	}
+
 	public Long getId() {
 		return id;
 	}

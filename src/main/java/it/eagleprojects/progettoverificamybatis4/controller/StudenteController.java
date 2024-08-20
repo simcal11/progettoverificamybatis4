@@ -33,7 +33,7 @@ public class StudenteController {
 		return new ResponseEntity<>(studenteMapper.getAllStudenti(), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/studenti/{studenteId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/studenti/{studenteId}", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody Studente getStudenteById(@PathVariable("studenteId") Long studenteId) throws Exception {
 		Studente studente = studenteMapper.getStudenteById(studenteId);
 
@@ -118,7 +118,7 @@ public class StudenteController {
 	/* _____________________________________________________________________ */
 
 	@RequestMapping(value = "/studenti/{studenteId}", method = RequestMethod.DELETE)
-	public @ResponseBody void deleteStudente(@PathVariable("studenteId") Long studenteId) throws Exception {
+	public @ResponseBody void deleteStudenteById(@PathVariable("studenteId") Long studenteId) throws Exception {
 
 		if (studenteMapper.getStudenteById(studenteId) == null) {
 			throw new Exception("Non esiste uno Studente con id = " + studenteId);
