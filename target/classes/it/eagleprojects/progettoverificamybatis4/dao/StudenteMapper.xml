@@ -36,8 +36,8 @@
 		SELECT s.id, s.nome, s.cognome, s.email, s.matricola, c.id
 		as corso_id, c.nome as corso_nome, c.cfu as corso_cfu, c.ore as
 		corso_ore
-		FROM studenti s LEFT OUTER JOIN corsi_studenti_iscrizioni csi
-		on s.id = csi.studenteid JOIN corsi c on c.id = csi.corsoid
+		FROM studenti s LEFT JOIN corsi_studenti_iscrizioni csi
+		on s.id = csi.studenteid LEFT JOIN corsi c on c.id = csi.corsoid
 	</select>
 
 	<select id="getStudenteById" resultType="studente"
@@ -45,8 +45,8 @@
 		SELECT s.id, s.nome, s.cognome, s.email, s.matricola, c.id
 		as corso_id, c.nome as corso_nome, c.cfu as corso_cfu, c.ore as
 		corso_ore
-		FROM studenti s LEFT OUTER JOIN corsi_studenti_iscrizioni csi
-		on s.id = csi.studenteid JOIN corsi c on c.id = csi.corsoid
+		FROM studenti s LEFT JOIN corsi_studenti_iscrizioni csi
+		on s.id = csi.studenteid LEFT JOIN corsi c on c.id = csi.corsoid
 		WHERE s.id
 		= #{studenteId}
 	</select>

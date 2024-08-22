@@ -34,13 +34,13 @@
 	<select id="getAllCorsi" resultType="corso"
 		resultMap="corsoResult">
 		SELECT c.id, c.nome, c.cfu, c.ore, s.id as s_id, s.nome as s_nome, s.cognome as s_cognome, s.email as s_email, s.matricola as s_matricola
-		FROM corsi c LEFT OUTER JOIN corsi_studenti_iscrizioni csi on c.id  = csi.corsoid JOIN studenti s on s.id  = csi.studenteid
+		FROM corsi c LEFT JOIN corsi_studenti_iscrizioni csi on c.id  = csi.corsoid LEFT JOIN studenti s on s.id  = csi.studenteid
 	</select>
 	
 	<select id="getCorsoById" resultType="corso"
 		resultMap="corsoResult">
 		SELECT c.id, c.nome, c.cfu, c.ore, s.id as s_id, s.nome as s_nome, s.cognome as s_cognome, s.email as s_email, s.matricola as s_matricola
-		FROM corsi c LEFT OUTER JOIN corsi_studenti_iscrizioni csi on c.id  = csi.corsoid JOIN studenti s on s.id  = csi.studenteid
+		FROM corsi c LEFT JOIN corsi_studenti_iscrizioni csi on c.id  = csi.corsoid LEFT JOIN studenti s on s.id  = csi.studenteid
 		WHERE c.id = #{corsoId}
 	</select>
 	
