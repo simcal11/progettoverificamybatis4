@@ -3,6 +3,8 @@ package it.eagleprojects.progettoverificamybatis4.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import it.eagleprojects.progettoverificamybatis4.dao.CorsoMapper;
 import it.eagleprojects.progettoverificamybatis4.dao.StudenteMapper;
 import it.eagleprojects.progettoverificamybatis4.model.Corso;
+import it.eagleprojects.progettoverificamybatis4.model.Studente;
 
 @Controller
 public class CorsoController {
@@ -27,27 +30,27 @@ public class CorsoController {
 	/* _____________________________________________________________________ */
 
 	@RequestMapping(value = "/corsi", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody List<Corso> getAllCorsi() {
-		return corsoMapper.getAllCorsi();
+	public @ResponseBody ResponseEntity<List<Corso>> getAllCorsi() {
+		return new ResponseEntity<>(corsoMapper.getAllCorsi(), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/corsi/{corsoId}", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody Corso getCorsoId(@PathVariable("corsoId") long corsoId) throws Exception {
+	public @ResponseBody ResponseEntity<Corso> getCorsoId(@PathVariable("corsoId") long corsoId) throws Exception {
 		Corso corso = corsoMapper.getCorsoById(corsoId);
 
 		if (corso == null) {
 			throw new Exception("Non esiste un Corso con id = " + corsoId);
 		}
-		return corso;
+		return new ResponseEntity<>(corso, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/studenti/{studenteId}/corsi", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody List<Corso> getAllCorsiByStudenteId(@PathVariable("studenteId") long studenteId)
+	public @ResponseBody ResponseEntity<List<Corso>> getAllCorsiByStudenteId(@PathVariable("studenteId") long studenteId)
 			throws Exception {
 		if (studenteMapper.getStudenteById(studenteId) == null) {
 			throw new Exception("Non esiste uno Studente con id = " + studenteId);
 		} else {
-			return corsoMapper.getAllCorsiByStudenteId(studenteId);
+			return new ResponseEntity<>(corsoMapper.getAllCorsiByStudenteId(studenteId), HttpStatus.OK);
 		}
 	}
 
@@ -55,12 +58,13 @@ public class CorsoController {
 	/* _____________________________________________________________________ */
 
 	@RequestMapping(value = "/corsi", method = RequestMethod.POST, consumes = "application/json")
-	public @ResponseBody Corso saveCorso(@RequestBody Corso corso) {
-		return corsoMapper.saveCorso(corso);
+	public @ResponseBody ResponseEntity<Corso> saveCorso(@RequestBody Corso corso) {
+		corsoMapper.saveCorso(corso);
+		return new ResponseEntity<>(corso, HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = "/studenti/{studenteId}/corsi", method = RequestMethod.POST, consumes = "application/json")
-	public @ResponseBody void addCorsoToStudente(@PathVariable(value = "studenteId") long studenteId,
+	public @ResponseBody ResponseEntity<Corso>  addCorsoToStudente(@PathVariable(value = "studenteId") long studenteId,
 			@RequestBody Corso corso) throws Exception {
 		if (studenteMapper.getStudenteById(studenteId) == null) {
 			throw new Exception("Non esiste uno Studente con id = " + studenteId);
@@ -75,13 +79,15 @@ public class CorsoController {
 		}
 
 		corsoMapper.addCorsoToStudente(studenteId, corso);
+		
+		return new ResponseEntity<>(corso, HttpStatus.OK);
 	}
 
 	// Metodi PUT
 	/* _____________________________________________________________________ */
 
 	@RequestMapping(value = "/corsi/{corsoId}", method = RequestMethod.PUT, produces = "application/json")
-	public @ResponseBody Corso updateCorsoById(@PathVariable("corsoId") Long corsoId, @RequestBody Corso corsoRequest)
+	public @ResponseBody ResponseEntity<Corso> updateCorsoById(@PathVariable("corsoId") Long corsoId, @RequestBody Corso corsoRequest)
 			throws Exception {
 
 		Corso corsoDaAggiornare = corsoMapper.getCorsoById(corsoId);
@@ -103,28 +109,31 @@ public class CorsoController {
 		if (corsoRequest.getOre() == null) {
 			corsoRequest.setOre(corsoDaAggiornare.getOre());
 		}
-		return corsoMapper.updateCorsoById(corsoRequest);
+		return new ResponseEntity<>(corsoMapper.updateCorsoById(corsoRequest), HttpStatus.NO_CONTENT);
 	}
 
 	// Metodi DELETE
 	/* _____________________________________________________________________ */
 
 	@RequestMapping(value = "/corsi", method = RequestMethod.DELETE)
-	public @ResponseBody void deleteAllCorsi() throws Exception {
+	public @ResponseBody ResponseEntity<Corso>  deleteAllCorsi() throws Exception {
 		corsoMapper.deleteAllCorsi();
+		
+		return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 	}
 
 	@RequestMapping(value = "/corsi/{corsoId}", method = RequestMethod.DELETE)
-	public @ResponseBody void deleteCorsoById(@PathVariable("corsoId") Long corsoId) throws Exception {
+	public @ResponseBody ResponseEntity<Corso> deleteCorsoById(@PathVariable("corsoId") Long corsoId) throws Exception {
 		if (corsoMapper.getCorsoById(corsoId) == null) {
 			throw new Exception("Non esiste un Corso con id = " + corsoId);
 		}
 
 		corsoMapper.deleteCorsoById(corsoId);
+		return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 	}
 
 	@RequestMapping(value = "/studenti/{studenteId}/corsi", method = RequestMethod.DELETE, consumes = "application/json")
-	public @ResponseBody void deleteCorsoFromStudente(@PathVariable(value = "studenteId") Long studenteId,
+	public @ResponseBody ResponseEntity<Corso>  deleteCorsoFromStudente(@PathVariable(value = "studenteId") Long studenteId,
 			@RequestBody Corso corso) throws Exception {
 
 		if (studenteMapper.getStudenteById(studenteId) == null) {
@@ -140,6 +149,7 @@ public class CorsoController {
 		}
 
 		corsoMapper.deleteCorsoFromStudente(studenteId, corso);
+		return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 	}
 	
 //	@RequestMapping(value = "/studenti/{studenteId}/corsi", method = RequestMethod.DELETE, produces = "application/json")

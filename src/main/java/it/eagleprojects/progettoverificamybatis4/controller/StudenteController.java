@@ -34,22 +34,22 @@ public class StudenteController {
 	}
 
 	@RequestMapping(value = "/studenti/{studenteId}", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody Studente getStudenteById(@PathVariable("studenteId") Long studenteId) throws Exception {
+	public @ResponseBody ResponseEntity<Studente> getStudenteById(@PathVariable("studenteId") Long studenteId) throws Exception {
 		Studente studente = studenteMapper.getStudenteById(studenteId);
 
 		if (studente == null) {
 			throw new Exception("Non esiste uno Studente con id = " + studenteId);
 		}
-		return studente;
+		return new ResponseEntity<>(studente, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/corsi/{corsoId}/studenti", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody List<Studente> getAllStudentiByCorsoId(@PathVariable("corsoId") Long corsoId)
+	public @ResponseBody ResponseEntity<List<Studente>> getAllStudentiByCorsoId(@PathVariable("corsoId") Long corsoId)
 			throws Exception {
 		if (corsoMapper.getCorsoById(corsoId) == null) {
 			throw new Exception("Non esiste un Corso con id = " + corsoId);
 		} else {
-			return studenteMapper.getAllStudentiByCorsoId(corsoId);
+			return new ResponseEntity<>(studenteMapper.getAllStudentiByCorsoId(corsoId), HttpStatus.OK);
 		}
 	}
 
@@ -57,12 +57,12 @@ public class StudenteController {
 	/* _____________________________________________________________________ */
 
 	@RequestMapping(value = "/studenti", method = RequestMethod.POST, consumes = "application/json")
-	public @ResponseBody Studente saveStudente(@RequestBody Studente studente) {
-		return studenteMapper.saveStudente(studente);
+	public @ResponseBody ResponseEntity<Studente> saveStudente(@RequestBody Studente studente) {
+		return new ResponseEntity<>( studenteMapper.saveStudente(studente),  HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = "/corsi/{corsoId}/studenti", method = RequestMethod.POST, consumes = "application/json")
-	public @ResponseBody void addStudenteToCorso(@PathVariable(value = "corsoId") Long corsoId,
+	public @ResponseBody ResponseEntity<Studente> addStudenteToCorso(@PathVariable(value = "corsoId") Long corsoId,
 			@RequestBody Studente studente) throws Exception {
 
 		if (corsoMapper.getCorsoById(corsoId) == null) {
@@ -78,13 +78,16 @@ public class StudenteController {
 		}
 
 		studenteMapper.addStudenteToCorso(corsoId, studente);
+		
+		return new ResponseEntity<>(studente, HttpStatus.OK);
+		
 	}
 
 	// Metodi PUT
 	/* _____________________________________________________________________ */
 
 	@RequestMapping(value = "/studenti/{studenteId}", method = RequestMethod.PUT, produces = "application/json")
-	public @ResponseBody Studente updateStudenteById(@PathVariable("studenteId") Long studenteId,
+	public @ResponseBody ResponseEntity<Studente> updateStudenteById(@PathVariable("studenteId") Long studenteId,
 			@RequestBody Studente studenteRequest) throws Exception {
 
 		Studente studenteDaAggiornare = studenteMapper.getStudenteById(studenteId);
@@ -111,29 +114,33 @@ public class StudenteController {
 			studenteRequest.setMatricola(studenteDaAggiornare.getMatricola());
 		}
 
-		return studenteMapper.updateStudenteById(studenteRequest);
+		return new ResponseEntity<>(studenteMapper.updateStudenteById(studenteRequest), HttpStatus.NO_CONTENT);
 	}
 
 	// Metodi DELETE
 	/* _____________________________________________________________________ */
 
 	@RequestMapping(value = "/studenti/{studenteId}", method = RequestMethod.DELETE)
-	public @ResponseBody void deleteStudenteById(@PathVariable("studenteId") Long studenteId) throws Exception {
+	public @ResponseBody ResponseEntity<Studente> deleteStudenteById(@PathVariable("studenteId") Long studenteId) throws Exception {
 
 		if (studenteMapper.getStudenteById(studenteId) == null) {
 			throw new Exception("Non esiste uno Studente con id = " + studenteId);
 		}
-
+		
 		studenteMapper.deleteStudenteById(studenteId);
+
+		return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+		
 	}
 
 	@RequestMapping(value = "/studenti", method = RequestMethod.DELETE)
-	public @ResponseBody void deleteAllStudenti() throws Exception {
+	public @ResponseBody ResponseEntity<Studente>  deleteAllStudenti() throws Exception {
 		studenteMapper.deleteAllStudenti();
+		return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 	}
 
 	@RequestMapping(value = "/corsi/{corsoId}/studenti", method = RequestMethod.DELETE, consumes = "application/json")
-	public @ResponseBody void deleteStudenteFromCorso(@PathVariable(value = "corsoId") Long corsoId,
+	public @ResponseBody ResponseEntity<Studente>  deleteStudenteFromCorso(@PathVariable(value = "corsoId") Long corsoId,
 			@RequestBody Studente studente) throws Exception {
 
 		if (corsoMapper.getCorsoById(corsoId) == null) {
@@ -149,6 +156,7 @@ public class StudenteController {
 		}
 
 		studenteMapper.deleteStudenteFromCorso(corsoId, studente);
+		return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 	}
 
 }

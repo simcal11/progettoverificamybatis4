@@ -1,8 +1,6 @@
 package it.eagleprojects.progettoverificamybatis4.controller;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-//
 
 import static org.mockito.Mockito.when;
 
@@ -110,7 +108,7 @@ public class StudenteControllerTest {
 		this.mockMvc
 				.perform(MockMvcRequestBuilders.get("/corsi/" + corsoProgrammazione.getId().toString() + "/studenti"))
 				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_VALUE))
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$", hasSize(3)))
 				.andExpect(jsonPath("$[0].id", is(1)))
 				.andExpect(jsonPath("$[1].id", is(2)))
@@ -129,7 +127,7 @@ public class StudenteControllerTest {
         .perform(MockMvcRequestBuilders.post("/studenti").contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .content(requestBody)
-        ).andExpect(MockMvcResultMatchers.status().isOk());
+        ).andExpect(MockMvcResultMatchers.status().isCreated());
 
         Mockito.verify(studenteMapper, Mockito.times(1)).saveStudente(Mockito.any(Studente.class));
     }
@@ -151,7 +149,7 @@ public class StudenteControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .content(requestBody)
-        ).andExpect(MockMvcResultMatchers.status().isOk());
+        ).andExpect(MockMvcResultMatchers.status().isNoContent());
 
         
         
@@ -168,7 +166,7 @@ public class StudenteControllerTest {
 
 	        mockMvc.perform(
 	                MockMvcRequestBuilders.delete("/studenti/{id}", "1"))
-	        .andExpect(MockMvcResultMatchers.status().isOk());
+	        .andExpect(MockMvcResultMatchers.status().isNoContent());
 
 	        Mockito.verify(studenteMapper, Mockito.times(1))
 	                .deleteStudenteById(Long.valueOf(1));

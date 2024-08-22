@@ -123,7 +123,7 @@ public class CorsoControllerTest {
         .perform(MockMvcRequestBuilders.post("/corsi").contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .content(requestBody)
-        ).andExpect(MockMvcResultMatchers.status().isOk());
+        ).andExpect(MockMvcResultMatchers.status().isCreated());
 
         Mockito.verify(corsoMapper, Mockito.times(1)).saveCorso(Mockito.any(Corso.class));
     }
@@ -144,7 +144,7 @@ public class CorsoControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .content(requestBody)
-        ).andExpect(MockMvcResultMatchers.status().isOk());
+        ).andExpect(MockMvcResultMatchers.status().isNoContent());
 
         
         
@@ -161,7 +161,7 @@ public class CorsoControllerTest {
 
 	        mockMvc.perform(
 	                MockMvcRequestBuilders.delete("/corsi/{id}", "1"))
-	        .andExpect(MockMvcResultMatchers.status().isOk());
+	        .andExpect(MockMvcResultMatchers.status().isNoContent());
 
 	        Mockito.verify(corsoMapper, Mockito.times(1))
 	                .deleteCorsoById(Long.valueOf(1));
