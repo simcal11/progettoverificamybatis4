@@ -109,6 +109,11 @@ public class CorsoController {
 		if (corsoRequest.getOre() == null) {
 			corsoRequest.setOre(corsoDaAggiornare.getOre());
 		}
+		
+		if (corsoRequest.getStudenti() == null) {
+			corsoRequest.setStudenti(corsoDaAggiornare.getStudenti());
+		}
+		
 		return new ResponseEntity<>(corsoMapper.updateCorsoById(corsoRequest), HttpStatus.NO_CONTENT);
 	}
 

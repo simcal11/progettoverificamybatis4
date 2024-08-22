@@ -113,6 +113,10 @@ public class StudenteController {
 		if (studenteRequest.getMatricola() == null) {
 			studenteRequest.setMatricola(studenteDaAggiornare.getMatricola());
 		}
+		
+		if (studenteRequest.getCorsi() == null) {
+			studenteRequest.setCorsi(studenteDaAggiornare.getCorsi());
+		}
 
 		return new ResponseEntity<>(studenteMapper.updateStudenteById(studenteRequest), HttpStatus.NO_CONTENT);
 	}
