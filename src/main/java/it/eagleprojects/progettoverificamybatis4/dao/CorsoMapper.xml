@@ -19,7 +19,6 @@
 		<result property="nome" column="s_nome" />
 		<result property="cognome" column="s_cognome" />
 		<result property="email" column="s_email" />
-		<result property="email" column="s_email" />
 		<result property="matricola" column="s_matricola" />
 	</resultMap>
 	
