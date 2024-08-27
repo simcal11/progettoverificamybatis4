@@ -20,9 +20,12 @@
     1. Creazione del file mvc-dispatcher-servlet.xml e web.xml per la configurazione di Spring
     1. Creazione del package model con Studente.java, Corso.java, CorsiStudentiIscrizioni.java
     1. Creazione del package dao con i mapper CorsoMapper.java/xml e StudenteMapper.java/xml
-    1. Creazione del package controller per i controller di Studente e Corsi
-    1. Realizzazione per entrambe le entità delle operazioni di base
+    1. Creazione del package controller per i Controller  StudenteController e CorsoController
+    1. Realizzazione per entrambe le entità delle operazioni di base (CRUD) + creazione/eliminazione della relazione MANY-TO-MANY tra gli oggetti
         1. READ (GET) di studenti, corsi, studenti iscritti ad un corso, corsi freqeuntati da uno studente
-        1. CREATE (POST) di uno studente, uno corso, assegnazione di uno studente ad un corso, assegnazione di un corso ad uno studente
+        1. CREATE (POST) di uno studente, un corso, assegnazione di uno studente ad un corso, assegnazione di un corso ad uno studente
         1. UPDATE (PUT) di uno studente, di un corso
         1. DELETE (DELETE) di uno studente, di un corso, di tutti gli studenti, di tutti i corsi, rimozione di uno studente ad un corso, rimozione di un corso ad uno studente
+        
+# Test
+1. Realizzazione dei test che verificano il corretto flusso di esecuzione dei metodi delle classi controller StudenteController e CorsoController
