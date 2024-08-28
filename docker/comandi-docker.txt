@@ -11,3 +11,5 @@ docker stop $(docker ps -a -q)
 docker rm $(docker ps -a -q)
 
 docker inspect -f '{{ .Mounts }}' containerid
+
+docker-compose up -d db
